@@ -3,7 +3,7 @@
 require_once('new.php');
 $n = new newVideo();
 $url = $n->getLink("B3bsD9GZKQg")["url"];
-
+die($url);
 // request headers
 $headers = array(
     'User-Agent: ' . USER_AGENT
