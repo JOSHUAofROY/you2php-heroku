@@ -253,9 +253,7 @@ class YouTubeDownloader
     // TODO: move this to its own HttpClient class
     public function stream($id)
     {
-        //$links = $this->getDownloadLinks($id, "mp4");
-
-        $links = $this -> getDownloadLinks($id);
+        $links = $this->getDownloadLinks($id, "mp4");
 
         if (count($links) == 0) {
             die("no url found!");
@@ -263,8 +261,6 @@ class YouTubeDownloader
 
         // grab first available MP4 link
         $url = $links[0]['url'];
-
-        header('Location: '.$url);
 
         // request headers
         $headers = array(
@@ -417,15 +413,11 @@ class YouTubeDownloader
         $video_html = $this->curl("https://www.youtube.com/watch?v={$video_id}");
 
         $result = array();
-        /*
         $url_map = $this->parseStreamMap($video_html, $video_id);
-*/
-        require_once('new.php');
-        $newVideo = new newVideo();
-        $url_map = $newVideo -> getLink($video_id);
+
         foreach ($url_map as $arr) {
             $url = $arr['url'];
-/*
+
             if (isset($arr['sig'])) {
                 $url = $url . '&signature=' . $arr['sig'];
 
@@ -437,16 +429,16 @@ class YouTubeDownloader
                 $signature = $this->decodeSignature($arr['s'], $video_html);
                 $url = $url . '&signature=' . $signature;
             }
-*/
+
             // redirector.googlevideo.com
-            $url = preg_replace('@(\/\/)[^\.]+(\.googlevideo\.com)@', '$1redirector$2', $url);
+            //$url = preg_replace('@(\/\/)[^\.]+(\.googlevideo\.com)@', '$1redirector$2', $url);
 
             $itag = $arr['itag'];
             $format = isset($this->itag_info[$itag]) ? $this->itag_info[$itag] : 'Unknown';
 
             $result[$itag] = array(
                 'url' => $url,
-                'format' => "MP4 1080"
+                'format' => $format
             );
         }
         // do we want all links or just select few?
@@ -457,3 +449,4 @@ class YouTubeDownloader
         return $result;
     }
 }
+
