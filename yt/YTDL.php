@@ -256,7 +256,7 @@ class YouTubeDownloader
         $links = $this->getDownloadLinks($id, "mp4");
 
         if (count($links) == 0) {
-            die("no url found!");
+            die("您干啥呢(  ^ω^)");
         }
         
         // grab first available MP4 link
@@ -377,7 +377,7 @@ class YouTubeDownloader
             $stream_map = $matches[1];
         } else {
 
-            $gvi = $this->curl("https://www.youtube.com/get_video_info?el=embedded&eurl=https%3A%2F%2Fwww.youtube.com%2Fwatch%3Fv%3D" . urlencode($video_id) . "&video_id={$video_id}");
+            $gvi = $this->curl("https://www.youtube.com/get_video_info?video_id={$video_id}");
 
             if (preg_match('@url_encoded_fmt_stream_map=([^\&\s]+)@', $gvi, $matches_gvi)) {
                 $stream_map = urldecode($matches_gvi[1]);
