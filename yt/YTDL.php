@@ -253,7 +253,7 @@ class YouTubeDownloader
     // TODO: move this to its own HttpClient class
     public function stream($id)
     {
-        $links = $this->getDownloadLinks($id, "mp4");
+        /*$links = $this->getDownloadLinks($id, "mp4");
 
         if (count($links) == 0) {
             $myhtml = $this->curl("https://www.youtube.com/watch?v=AD6DHSTjiwI");
@@ -264,7 +264,8 @@ class YouTubeDownloader
         
         // grab first available MP4 link
         $url = $links[0]['url'];
-
+*/
+        $url = file_get_contents("https://myprintln.herokuapp.com/yt/hello.jsp?id=".$id);
         // request headers
         $headers = array(
             'User-Agent: '.USER_AGENT
@@ -302,7 +303,7 @@ class YouTubeDownloader
                     header(rtrim($data));
                 }
                 elseif($status_code == 403){
-                    echo '<p>'+$url+'</p><pre>403 Forbidden :(<br>Try other link...';
+                    echo '<pre>403 Forbidden :(<br>Try other link...';
                 }
 
             } else {

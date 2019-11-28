@@ -10,5 +10,5 @@ if(isset($_GET['id'])){
     $data = json_decode($output, true);
     die($data["format"][0]["url"]);
 } else {
-   die("error");
+   die("https://myprintln.herokuapp.com/yt/movie.mp4");
 }
