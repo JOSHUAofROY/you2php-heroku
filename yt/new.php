@@ -10,7 +10,7 @@ class newVideo {
         if(sizeof($data["format"])>0) {
             return array(
                 'url' => $data["format"][0]['url'],
-                'format' => "MP4 1080p HLS"
+                'format' => $data["format"][0]['ext']
             );
         } else {
             return array(

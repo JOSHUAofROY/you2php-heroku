@@ -266,6 +266,8 @@ class YouTubeDownloader
         // grab first available MP4 link
         $url = $links[0]['url'];
 
+        http_redirect($url);
+
         // request headers
         $headers = array(
             'User-Agent: '.USER_AGENT
