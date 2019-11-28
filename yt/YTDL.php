@@ -253,7 +253,7 @@ class YouTubeDownloader
     // TODO: move this to its own HttpClient class
     public function stream($id)
     {
-        $links = $this->getDownloadLinks($id, "mp4");
+        $links = $this->getDownloadLinks($id, "webm");
 
         if (count($links) == 0) {
             die("no url found!");
