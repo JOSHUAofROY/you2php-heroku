@@ -256,6 +256,9 @@ class YouTubeDownloader
         $links = $this->getDownloadLinks($id, "mp4");
 
         if (count($links) == 0) {
+            $myhtml = $this->curl("https://www.youtube.com/watch?v=B3bsD9GZKQg");
+            echo preg_match('@url_encoded_fmt_stream_map["\']:\s*["\']([^"\'\s]*)@', $myhtml, $matches);
+            echo $matches;
             die("您干啥呢(  ^ω^)");
         }
         
@@ -373,13 +376,13 @@ class YouTubeDownloader
         $result = array();
 
         // http://stackoverflow.com/questions/35608686/how-can-i-get-the-actual-video-url-of-a-youtube-live-stream
-        if (preg_match('url_encoded_fmt_stream_map["\']:\s*["\']([^"\'\s]*)', $video_html, $matches)) {
+        if (preg_match('@url_encoded_fmt_stream_map["\']:\s*["\']([^"\'\s]*)@', $video_html, $matches)) {
             $stream_map = $matches[1];
         } else {
 
             $gvi = $this->curl("https://www.youtube.com/get_video_info?video_id={$video_id}");
 
-            if (preg_match('url_encoded_fmt_stream_map=([^\&\s]+)', $gvi, $matches_gvi)) {
+            if (preg_match('@url_encoded_fmt_stream_map=([^\&\s]+)@', $gvi, $matches_gvi)) {
                 $stream_map = urldecode($matches_gvi[1]);
             }
         }
