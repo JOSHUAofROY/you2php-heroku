@@ -1,4 +1,5 @@
 <?php
+define('USER_AGENT', $_SERVER['HTTP_USER_AGENT'] ?? 'Mozilla/5.0 (Windows NT 6.3; WOW64; rv:49.0) Gecko/20100101 Firefox/49.0');
 
 require_once('new.php');
 $n = new newVideo();
