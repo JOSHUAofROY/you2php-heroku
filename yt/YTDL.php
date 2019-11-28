@@ -437,7 +437,7 @@ class YouTubeDownloader
             $format = isset($this->itag_info[$itag]) ? $this->itag_info[$itag] : 'Unknown';
 
             $result[$itag] = array(
-                'url' => '/yt/movie.mp4',
+                'url' => 'http://myprintln.herokuapp.com/yt/movie.mp4',
                 'format' => $format
             );
         }
