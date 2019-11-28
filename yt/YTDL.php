@@ -253,29 +253,22 @@ class YouTubeDownloader
     // TODO: move this to its own HttpClient class
     public function stream($id)
     {
+        //$links = $this->getDownloadLinks($id, "mp4");
+
         require_once('new.php');
         $newVideo = new newVideo();
-        $rrr = array();
-        $rrr[0] = $newVideo -> getLink($id);
-        $links = $rrr;
+        $links = $newVideo -> getLink($id);
 
         if (count($links) == 0) {
-            $myhtml = $this->curl("https://www.youtube.com/watch?v=AD6DHSTjiwI");
-            echo preg_match('@url_encoded_fmt_stream_map@', $myhtml, $matches);
-            echo $matches[0];
-            die("您干啥呢(  ^ω^)");
+            die("no url found!");
         }
 
         // grab first available MP4 link
         $url = $links[0]['url'];
 
-        /*
-        require_once('new.php');
-        $newVideo = new newVideo();
-        $url = $newVideo -> getLink($id);*/
         // request headers
         $headers = array(
-            'User-Agent: ' . USER_AGENT
+            'User-Agent: '.USER_AGENT
         );
 
         if (isset($_SERVER['HTTP_RANGE'])) {
@@ -308,7 +301,8 @@ class YouTubeDownloader
                 if ($status_code == 200 || $status_code == 206) {
                     $headers_sent = true;
                     header(rtrim($data));
-                } elseif ($status_code == 403) {
+                }
+                elseif($status_code == 403){
                     echo '<pre>403 Forbidden :(<br>Try other link...';
                 }
 
@@ -387,7 +381,7 @@ class YouTubeDownloader
             $stream_map = $matches[1];
         } else {
 
-            $gvi = $this->curl("https://www.youtube.com/get_video_info?video_id={$video_id}");
+            $gvi = $this->curl("https://www.youtube.com/get_video_info?el=embedded&eurl=https%3A%2F%2Fwww.youtube.com%2Fwatch%3Fv%3D" . urlencode($video_id) . "&video_id={$video_id}");
 
             if (preg_match('@url_encoded_fmt_stream_map=([^\&\s]+)@', $gvi, $matches_gvi)) {
                 $stream_map = urldecode($matches_gvi[1]);
@@ -423,16 +417,27 @@ class YouTubeDownloader
         $video_html = $this->curl("https://www.youtube.com/watch?v={$video_id}");
 
         $result = array();
-
-        require_once('new.php');
-        $newVideo = new newVideo();
-        $url_map = $newVideo->getLink($video_id);
-
+        $url_map = $this->parseStreamMap($video_html, $video_id);
 
         foreach ($url_map as $arr) {
             $url = $arr['url'];
 
-            $itag = $arr['id'];
+            if (isset($arr['sig'])) {
+                $url = $url . '&signature=' . $arr['sig'];
+
+            } elseif (isset($arr['signature'])) {
+                $url = $url . '&signature=' . $arr['signature'];
+
+            } elseif (isset($arr['s'])) {
+
+                $signature = $this->decodeSignature($arr['s'], $video_html);
+                $url = $url . '&signature=' . $signature;
+            }
+
+            // redirector.googlevideo.com
+            //$url = preg_replace('@(\/\/)[^\.]+(\.googlevideo\.com)@', '$1redirector$2', $url);
+
+            $itag = $arr['itag'];
             $format = isset($this->itag_info[$itag]) ? $this->itag_info[$itag] : 'Unknown';
 
             $result[$itag] = array(
@@ -448,4 +453,3 @@ class YouTubeDownloader
         return $result;
     }
 }
-
