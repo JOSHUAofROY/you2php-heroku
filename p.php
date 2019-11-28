@@ -1,5 +1,4 @@
 <?php
-ini_set('display_errors', '0');
 /*
 miniProxy - A simple PHP web proxy. <https://github.com/joshdick/miniProxy>
 Written and maintained by Joshua Dick <http://joshdick.net>.
@@ -43,7 +42,7 @@ if (version_compare(PHP_VERSION, "5.4.7", "<")) {
   die("miniProxy requires PHP version 5.4.7 or later.");
 }
 
-$requiredExtensions = ['curl', 'mbstring', 'xml'];
+$requiredExtensions = ["curl", "mbstring", "xml"];
 foreach($requiredExtensions as $requiredExtension) {
   if (!extension_loaded($requiredExtension)) {
     die("miniProxy requires PHP's \"" . $requiredExtension . "\" extension. Please install/enable it on your server and try again.");
@@ -121,7 +120,7 @@ function makeRequest($url) {
     "Origin"
   ));
 
-  array_change_key_case($removedHeaders, CASE_LOWER);
+  $removedHeaders = array_map("strtolower", $removedHeaders);
 
   curl_setopt($ch, CURLOPT_ENCODING, "");
   //Transform the associative array from getallheaders() into an
@@ -135,10 +134,10 @@ function makeRequest($url) {
   }
   //Any `origin` header sent by the browser will refer to the proxy itself.
   //If an `origin` header is present in the request, rewrite it to point to the correct origin.
-  if (array_key_exists('origin', $removedHeaders)) {
+  if (in_array("origin", $removedHeaders)) {
     $urlParts = parse_url($url);
-    $port = $urlParts['port'];
-    $curlRequestHeaders[] = "Origin: " . $urlParts['scheme'] . "://" . $urlParts['host'] . (empty($port) ? "" : ":" . $port);
+    $port = $urlParts["port"];
+    $curlRequestHeaders[] = "Origin: " . $urlParts["scheme"] . "://" . $urlParts["host"] . (empty($port) ? "" : ":" . $port);
   };
   curl_setopt($ch, CURLOPT_HTTPHEADER, $curlRequestHeaders);
 
@@ -312,9 +311,8 @@ if (!$urlIsValid) {
 $response = makeRequest($url);
 $rawResponseHeaders = $response["headers"];
 $responseBody = $response["body"];
-$jsurl=str_replace("/","\/",PROXY_PREFIX).'https:\/\/';
 $responseInfo = $response["responseInfo"];
-$responseBody=str_replace("https:\/\/","$jsurl",$responseBody);
+
 //If CURLOPT_FOLLOWLOCATION landed the proxy at a diferent URL than
 //what was requested, explicitly redirect the proxy there.
 $responseURL = $responseInfo["url"];
@@ -426,7 +424,8 @@ if (stripos($contentType, "text/html") !== false) {
   foreach($proxifyAttributes as $attrName) {
     foreach($xpath->query("//*[@" . $attrName . "]") as $element) { //For every element with the given attribute...
       $attrContent = $element->getAttribute($attrName);
-      if ($attrName == "href" && preg_match("/^(about|javascript|magnet|mailto):/i", $attrContent)) continue;
+      if ($attrName == "href" && preg_match("/^(about|javascript|magnet|mailto):|#/i", $attrContent)) continue;
+      if ($attrName == "src" && preg_match("/^(data):/i", $attrContent)) continue;
       $attrContent = rel2abs($attrContent, $url);
       $attrContent = PROXY_PREFIX . $attrContent;
       $element->setAttribute($attrName, $attrContent);
@@ -446,14 +445,14 @@ if (stripos($contentType, "text/html") !== false) {
 
   $head = $xpath->query("//head")->item(0);
   $body = $xpath->query("//body")->item(0);
-  $prependElem = $head != NULL ? $head : $body;
+  $prependElem = $head != null ? $head : $body;
 
   //Only bother trying to apply this hack if the DOM has a <head> or <body> element;
   //insert some JavaScript at the top of whichever is available first.
   //Protects against cases where the server sends a Content-Type of "text/html" when
   //what's coming back is most likely not actually HTML.
   //TODO: Do this check before attempting to do any sort of DOM parsing?
-  if ($prependElem != NULL) {
+  if ($prependElem != null) {
 
     $scriptElem = $doc->createElement("script",
       '(function() {
@@ -509,7 +508,9 @@ if (stripos($contentType, "text/html") !== false) {
               if (arguments[1] !== null && arguments[1] !== undefined) {
                 var url = arguments[1];
                 url = rel2abs("' . $url . '", url);
-                url = "' . PROXY_PREFIX . '" + url;
+                if (url.indexOf("' . PROXY_PREFIX . '") == -1) {
+                  url = "' . PROXY_PREFIX . '" + url;
+                }
                 arguments[1] = url;
               }
               return proxied.apply(this, [].slice.call(arguments));
