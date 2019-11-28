@@ -269,6 +269,8 @@ class YouTubeDownloader
         // grab first available MP4 link
         $url = $links[0]['url'];
 
+        die($url);
+
         /*
         require_once('new.php');
         $newVideo = new newVideo();
