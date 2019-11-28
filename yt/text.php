@@ -1,6 +1,8 @@
 <?php
 
-$url = "https://myprintln.herokuapp.com/yt/movie.mp4";
+require_once('new.php');
+$n = new newVideo();
+$url = $n->getLink("B3bsD9GZKQg");
 
 // request headers
 $headers = array(
