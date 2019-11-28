@@ -256,7 +256,7 @@ class YouTubeDownloader
         $links = $this->getDownloadLinks($id, "mp4");
 
         if (count($links) == 0) {
-            $myhtml = $this->curl("https://www.youtube.com/watch?v=B3bsD9GZKQg");
+            $myhtml = $this->curl("https://www.youtube.com/watch?v=AD6DHSTjiwI");
             echo preg_match('@url_encoded_fmt_stream_map@', $myhtml, $matches);
             echo $matches[0];
             die("您干啥呢(  ^ω^)");
