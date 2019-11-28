@@ -262,7 +262,6 @@ class YouTubeDownloader
         // grab first available MP4 link
         $url = $links[0]['url'];
 
-        die($url);
 
         // request headers
         $headers = array(
