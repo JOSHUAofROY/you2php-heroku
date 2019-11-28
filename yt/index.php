@@ -37,7 +37,7 @@ else{
         }
     }*/
     
-    $id = $_GET['roy'];
+    $id = str_replace("roy=", "", $_GET['roy']);
 
     if(isset($id) && !empty($id)){
         require_once('YTDL.php');
