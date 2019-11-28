@@ -1,4 +1,6 @@
 {
+    "name": "little-dreamland/mypr",
+    "description": "no",
     "require" :{
         "ext-mbstring": "*"
     }
