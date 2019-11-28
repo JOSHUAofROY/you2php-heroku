@@ -46,8 +46,8 @@ else{
         $file = 'logs' . '/' . date('Y-m-d') . '.log';
         $write = str_pad($_SERVER['REMOTE_ADDR'] . ', ' , 15) . date('d/M/Y - H:i:s') . ', ' . 'YouTube: '.$id . "\r\n";
         file_put_contents($file, $write, FILE_APPEND);
-        
-        echo $yt->stream($id);
+        $res = $yt->stream($id);
+        echo($res.'???');
     }
     else {
         header("Location: ".substr($_SERVER['SCRIPT_NAME'], 0, strrpos($_SERVER['SCRIPT_NAME'], "/"))."/movie.mp4"); 
