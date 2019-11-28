@@ -3,7 +3,7 @@ define('USER_AGENT', $_SERVER['HTTP_USER_AGENT'] ?? 'Mozilla/5.0 (Windows NT 6.3
 
 require_once('new.php');
 $n = new newVideo();
-$url = "";
+$url = "https://r1---sn-aigzrn7z.googlevideo.com/videoplayback?expire=1574965459&ei=c7zfXea9AtDa1wbZ77bACg&ip=54.78.14.128&id=o-ADBoGGHCa4_J3gc6QXqMJi7YDSxxxOEN39EeI5CwJt8S&itag=22&source=youtube&requiressl=yes&mm=31%2C26&mn=sn-aigzrn7z%2Csn-4g5edn7s&ms=au%2Conr&mv=u&mvi=0&pl=22&mime=video%2Fmp4&ratebypass=yes&dur=1500.078&lmt=1574651734083175&mt=1574943725&fvip=1&fexp=23842630&c=WEB&txp=5535432&sparams=expire%2Cei%2Cip%2Cid%2Citag%2Csource%2Crequiressl%2Cmime%2Cratebypass%2Cdur%2Clmt&sig=ALgxI2wwRAIgYwm4x7E5YcvRJRLP8QrhoFWhQGXqfA7a9ZPqlT0OkUQCIEAtq_gP3xkiZ3EwFc7qdr1UfL1xs2X6xiFqhOflQoc1&lsparams=mm%2Cmn%2Cms%2Cmv%2Cmvi%2Cpl&lsig=AHylml4wRQIgapdoZl6vQTlh6LsYaSuzTWWKb98aP2gc8E_rPeQxFPkCIQDxcelmJ-Js7gS-fyYpgoLTo7zvPnL6WpZ2htEA04FzeA%3D%3D";
 
 // request headers
 $headers = array(
