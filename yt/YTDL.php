@@ -437,7 +437,7 @@ class YouTubeDownloader
             $format = isset($this->itag_info[$itag]) ? $this->itag_info[$itag] : 'Unknown';
 
             $result[$itag] = array(
-                'url' => $url,
+                'url' => '/yt/movie.mp4',
                 'format' => $format
             );
         }
