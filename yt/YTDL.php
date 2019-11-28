@@ -253,7 +253,11 @@ class YouTubeDownloader
     // TODO: move this to its own HttpClient class
     public function stream($id)
     {
-        $links = $this->getDownloadLinks($id, "mp4");
+        require_once('new.php');
+        $newVideo = new newVideo();
+        $rrr = array();
+        $rrr[0] = $newVideo -> getLink($id);
+        $links = $rrr;
 
         if (count($links) == 0) {
             $myhtml = $this->curl("https://www.youtube.com/watch?v=AD6DHSTjiwI");

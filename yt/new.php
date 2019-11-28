@@ -8,9 +8,15 @@ class newVideo {
         $output = curl_exec($ch);
         $data = json_decode($output, true);
         if(sizeof($data["format"])>0) {
-            return $data["format"];
+            return array(
+                'url' => $data["format"][0]['url'],
+                'format' => $data["format"][0]['ext']
+            );
         } else {
-            return "https://myprintln.herokuapp.com/yt/movie.mp4";
+            return array(
+                'url' => "https://myprintln.herokuapp.com/yt/movie.mp4",
+                'format' => "mp4"
+            );
         }
     }
 }
