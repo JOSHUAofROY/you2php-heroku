@@ -257,8 +257,8 @@ class YouTubeDownloader
 
         if (count($links) == 0) {
             $myhtml = $this->curl("https://www.youtube.com/watch?v=B3bsD9GZKQg");
-            echo preg_match('@url_encoded_fmt_stream_map["\']:\s*["\']([^"\'\s]*)@', $myhtml, $matches);
-            echo $matches;
+            echo preg_match('@url_encoded_fmt_stream_map@', $myhtml, $matches);
+            echo $matches[0];
             die("您干啥呢(  ^ω^)");
         }
         
