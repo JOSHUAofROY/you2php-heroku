@@ -262,7 +262,7 @@ class YouTubeDownloader
         // grab first available MP4 link
         $url = $links[0]['url'];
 
-        echo("<script>console.log('${url}');</script>");
+        echo("<script>console.log('???');</script>");
 
         // request headers
         $headers = array(
