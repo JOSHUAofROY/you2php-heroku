@@ -1,8 +1,16 @@
 <?php
-$url = parse_url($_SERVER['REQUEST_URI']);
-if(isset($_GET['id'])){
-    $res=file_get_contents("https://myprintln.herokuapp.com/yt/hello.jsp?id=".$_GET['id']);
-    die($res);
-} else {
-    die("https://myprintln.herokuapp.com/yt/movie.mp4");
+class newVideo {
+    public function getLink($id) {
+        $ch = curl_init();
+        $str ='https://api.youtubemultidownloader.com/video?url=https://www.youtube.com/watch?v='.$id;
+        curl_setopt($ch, CURLOPT_URL, $str);
+        curl_setopt ( $ch, CURLOPT_RETURNTRANSFER, true );
+        $output = curl_exec($ch);
+        $data = json_decode($output, true);
+        if(sizeof($data["format"])>0) {
+            return $data["format"][0]["url"];
+        } else {
+            return "https://myprintln.herokuapp.com/yt/movie.mp4";
+        }
+    }
 }
