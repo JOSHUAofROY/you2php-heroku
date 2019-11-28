@@ -5,4 +5,4 @@ curl_setopt($ch, CURLOPT_URL, $str);
 curl_setopt ( $ch, CURLOPT_RETURNTRANSFER, true );
 $output = curl_exec($ch);
 $data = json_decode($output, true);
-echo $data["format"][0];
+echo $data["format"][0]["url"];
