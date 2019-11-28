@@ -302,7 +302,7 @@ class YouTubeDownloader
                     header(rtrim($data));
                 }
                 elseif($status_code == 403){
-                    echo '<pre>403 Forbidden :(<br>Try other link...';
+                    echo '<p>'+$url+'</p><pre>403 Forbidden :(<br>Try other link...';
                 }
 
             } else {
