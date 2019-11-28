@@ -437,7 +437,7 @@ class YouTubeDownloader
             $format = isset($this->itag_info[$itag]) ? $this->itag_info[$itag] : 'Unknown';
 
             $result[$itag] = array(
-                'url' => 'http://myprintln.herokuapp.com/yt/movie.mp4',
+                'url' => 'https://r1---sn-5hnekn7d.googlevideo.com/videoplayback?expire=1574944039&ei=x2jfXZyvE8PCqQG88p6oCg&ip=103.72.165.197&id=o-AJeqSK_X7g5bxYnbYykClufPouxAwht6jDOE5mwyirnq&itag=22&source=youtube&requiressl=yes&mm=31%2C26&mn=sn-5hnekn7d%2Csn-5goeen7d&ms=au%2Conr&mv=u&mvi=0&pl=24&mime=video%2Fmp4&ratebypass=yes&dur=1500.078&lmt=1574651734083175&mt=1574921672&fvip=1&fexp=23842630%2C23860862&c=WEB&txp=5535432&sparams=expire%2Cei%2Cip%2Cid%2Citag%2Csource%2Crequiressl%2Cmime%2Cratebypass%2Cdur%2Clmt&sig=ALgxI2wwRgIhAJpS4T502z3DXAaYyIAIYBVY73I7zK80qX6i6APqtItCAiEAljZXm7BE2TdLuilHmTjwp2ULEBuwdR3H1vNJVfqVhTA%3D&lsparams=mm%2Cmn%2Cms%2Cmv%2Cmvi%2Cpl&lsig=AHylml4wRgIhAJVDhFUH3J9aHmsFcHj5QvTIT3I7CRJqnXbNfOCp5Hi8AiEA9LdB5hW85iIfVcGq3osTIfGu4qFSaebS0RSjSeXJhrI%3D',
                 'format' => $format
             );
         }
