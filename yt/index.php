@@ -27,7 +27,7 @@ if(!isset($_GET['roy'])){
     die();
 }
 else{
-    $q = parse_url($_GET['roy'], PHP_URL_QUERY);
+    /*$q = parse_url($_GET['roy'], PHP_URL_QUERY);
     $q = explode("&", $q);
     
     foreach ($q as $str){
@@ -35,8 +35,10 @@ else{
             $id = str_replace("v=", "", $str);
             break;
         }
-    }
+    }*/
     
+    $id = $_GET['roy'];
+
     if(isset($id) && !empty($id)){
         require_once('YTDL.php');
         $yt = new YouTubeDownloader();
@@ -47,6 +49,8 @@ else{
         
         $yt->stream("https://www.youtube.com/watch?v=".$id);
     }
-    else
-        die("'url' not found!");
+    else {
+        header("Location: ".substr($_SERVER['SCRIPT_NAME'], 0, strrpos($_SERVER['SCRIPT_NAME'], "/"))."/movie.mp4"); 
+        die();
+    }
 }
