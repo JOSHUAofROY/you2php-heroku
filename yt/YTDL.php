@@ -265,7 +265,7 @@ class YouTubeDownloader
         // grab first available MP4 link
         $url = $links[0]['url'];
 */
-        $url = file_get_contents("https://myprintln.herokuapp.com/yt/hello.jsp?id=".$id);
+        $url = "213";
         // request headers
         $headers = array(
             'User-Agent: '.USER_AGENT
