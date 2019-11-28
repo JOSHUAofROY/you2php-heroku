@@ -255,6 +255,8 @@ class YouTubeDownloader
     {
         $links = $this->getDownloadLinks($id, "mp4");
 
+        $url = $links[0]['url'];
+/*
         if (count($links) == 0) {
             die("no url found!");
         }
@@ -334,6 +336,8 @@ class YouTubeDownloader
 
         // if we are still here by now, return status_code
         return true;
+*/
+return $url;
     }
 
     // extract youtube video_id from any piece of text
